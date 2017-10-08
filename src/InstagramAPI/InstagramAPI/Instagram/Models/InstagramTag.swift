@@ -10,9 +10,10 @@ import ObjectMapper
 
 struct InstagramTag: AnyInstagramModel {
   // MARK: - Properties
-  var name: String = ""
-  var mediaCount: Int = 0
-  var id: String {
+  public var name: String = ""
+  public var mediaCount: Int = 0
+  //swiftlint:disable:next identifier_name
+  public var id: String {
     return name
   }
 }

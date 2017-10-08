@@ -25,6 +25,7 @@ class RequestViewController: UIViewController {
 
         self.title = "Requests"
         sectionsDataSource = ["User", "Relationship", "Media", "Comment", "Like", "Tag", "Location"]
+        //swiftlint:disable:next line_length
         rowsDataSource = [["Self", "Recent of self", "User id", "Recent of user-id", "Liked", "Search"], ["Follows", "Followed by", "Requested by", "Relationship"], ["Media id", "Shortcode", "Search id"], ["Comments", "Comment id"], ["Likes"], ["Tag name", "Tag name recent", "Search"], ["Location id", "Location id recent", "Search"]]
     }
 
@@ -48,6 +49,7 @@ extension RequestViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //swiftlint:disable:next force_cast
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: RequestCell.self)) as! RequestCell
         cell.nameLabel.text = rowsDataSource[indexPath.section][indexPath.row]
         return cell
@@ -55,6 +57,7 @@ extension RequestViewController: UITableViewDataSource {
 }
 
 extension RequestViewController: UITableViewDelegate {
+    //swiftlint:disable:next cyclomatic_complexity function_body_length
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         // TODO: Fix spagetti
@@ -66,20 +69,22 @@ extension RequestViewController: UITableViewDelegate {
             case 0:
                 //Self
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let controller = storyboard.instantiateViewController(withIdentifier: "UserViewController") as! UserViewController
-                controller.userParameter = .owner
-                controller.title = rowsDataSource[indexPath.section][indexPath.row]
-                self.navigationController?.pushViewController(controller, animated: true)
-
+                //swiftlint:disable:next force_cast line_length
+                if let controller = storyboard.instantiateViewController(withIdentifier: "UserViewController") as? UserViewController {
+                  controller.userParameter = .owner
+                  controller.title = rowsDataSource[indexPath.section][indexPath.row]
+                  self.navigationController?.pushViewController(controller, animated: true)
+                }
                 break
             case 1:
                 //Recent of self
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let controller = storyboard.instantiateViewController(withIdentifier: "UserMediaViewController") as! UserMediaViewController
-                controller.type = .recent(nil)
-                controller.title = rowsDataSource[indexPath.section][indexPath.row]
-                self.navigationController?.pushViewController(controller, animated: true)
-
+                //swiftlint:disable:next force_cast line_length
+                if let controller = storyboard.instantiateViewController(withIdentifier: "UserMediaViewController") as? UserMediaViewController {
+                  controller.type = .recent(nil)
+                  controller.title = rowsDataSource[indexPath.section][indexPath.row]
+                  self.navigationController?.pushViewController(controller, animated: true)
+                }
                 break
             case 2:
                 //User id
@@ -89,11 +94,14 @@ extension RequestViewController: UITableViewDelegate {
                 let goAction = UIAlertAction(title: "Go", style: .default, handler: {_ -> Void in
                     let firstTextField = alertController.textFields![0] as UITextField
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let controller = storyboard.instantiateViewController(withIdentifier: "UserViewController") as! UserViewController
-                    controller.userParameter = InstagramUserRouter.UserParameter.id(firstTextField.text!)
-                    controller.title = self.rowsDataSource[indexPath.section][indexPath.row]
-                    self.navigationController?.pushViewController(controller, animated: true)
+                    //swiftlint:disable:next force_cast line_length
+                    if let controller = storyboard.instantiateViewController(withIdentifier: "UserViewController") as? UserViewController {
+                      controller.userParameter = InstagramUserRouter.UserParameter.id(firstTextField.text!)
+                      controller.title = self.rowsDataSource[indexPath.section][indexPath.row]
+                      self.navigationController?.pushViewController(controller, animated: true)
+                    }
                 })
+                //swiftlint:disable:next line_length
                 let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {(_ : UIAlertAction!) -> Void in
 
                 })
@@ -112,11 +120,13 @@ extension RequestViewController: UITableViewDelegate {
                 let goAction = UIAlertAction(title: "Go", style: .default, handler: {_ -> Void in
                     let firstTextField = alertController.textFields![0] as UITextField
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    //swiftlint:disable:next force_cast line_length
                     let controller = storyboard.instantiateViewController(withIdentifier: "UserMediaViewController") as! UserMediaViewController
                     controller.type = .recent(firstTextField.text)
                     controller.title = self.rowsDataSource[indexPath.section][indexPath.row]
                     self.navigationController?.pushViewController(controller, animated: true)
                 })
+                //swiftlint:disable:next line_length
                 let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {(_ : UIAlertAction!) -> Void in
 
                 })
@@ -131,6 +141,7 @@ extension RequestViewController: UITableViewDelegate {
             case 4:
                 //Liked
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                //swiftlint:disable:next force_cast line_length
                 let controller = storyboard.instantiateViewController(withIdentifier: "UserMediaViewController") as! UserMediaViewController
                 controller.type = .liked
                 controller.title = rowsDataSource[indexPath.section][indexPath.row]
@@ -140,6 +151,7 @@ extension RequestViewController: UITableViewDelegate {
             case 5:
                 //Search
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                //swiftlint:disable:next force_cast line_length
                 let controller = storyboard.instantiateViewController(withIdentifier: "UserSearchViewController") as! UserSearchViewController
                 controller.title = rowsDataSource[indexPath.section][indexPath.row]
                 self.navigationController?.pushViewController(controller, animated: true)
@@ -153,11 +165,12 @@ extension RequestViewController: UITableViewDelegate {
             break
 
         case 1:
-            //Relationship
+            // Relationship
             switch indexPath.row {
             case 0:
                 //Follows
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                //swiftlint:disable:next force_cast line_length
                 let controller = storyboard.instantiateViewController(withIdentifier:   "RelationshipTableViewController") as! RelationshipTableViewController
                 controller.type = .follows
                 controller.title = rowsDataSource[indexPath.section][indexPath.row]
@@ -166,6 +179,7 @@ extension RequestViewController: UITableViewDelegate {
             case 1:
               // Followed by
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                //swiftlint:disable:next force_cast line_length
                 let controller = storyboard.instantiateViewController(withIdentifier: "RelationshipTableViewController") as! RelationshipTableViewController
                 controller.type = .followedBy
                 controller.title = rowsDataSource[indexPath.section][indexPath.row]
@@ -174,6 +188,7 @@ extension RequestViewController: UITableViewDelegate {
             case 2:
                 //Requested by
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                //swiftlint:disable:next force_cast line_length
                 let controller = storyboard.instantiateViewController(withIdentifier:   "RelationshipTableViewController") as! RelationshipTableViewController
                 controller.type = .requestedBy
                 controller.title = rowsDataSource[indexPath.section][indexPath.row]
@@ -187,12 +202,13 @@ extension RequestViewController: UITableViewDelegate {
                 let goAction = UIAlertAction.init(title: "Go", style: .default, handler: {_ -> Void in
                   let firstTextField = alertController.textFields?[0]
                   let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                  //swiftlint:disable:next force_cast line_length
                   let controller = storyboard.instantiateViewController(withIdentifier:"RelationshipViewController") as! RelationshipViewController
                   controller.targetUserId = firstTextField?.text
                   controller.title = self.rowsDataSource[indexPath.section][indexPath.row]
                   self.navigationController?.pushViewController(controller, animated: true)
                   })
-
+                //swiftlint:disable:next line_length
                 let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {(_ : UIAlertAction!) -> Void in
 
                 })
@@ -217,14 +233,14 @@ extension RequestViewController: UITableViewDelegate {
                 let goAction = UIAlertAction.init(title: "Go", style: .default, handler: { _ -> Void in
                   let firstTextField = alertController.textFields?[0]
                   let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                  //swiftlint:disable:next force_cast line_length
                   let controller = storyboard.instantiateViewController(withIdentifier: "MediaViewController") as! MediaViewController
                   controller.mediaParameter = InstagramMediaRouter.MediaParameter.id((firstTextField?.text)!)
                   controller.title = self.rowsDataSource[indexPath.section][indexPath.row]
                   self.navigationController?.pushViewController(controller, animated: true)
                 })
-
-                let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
-                  (_ : UIAlertAction!) -> Void in
+                //swiftlint:disable:next line_length
+                let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {(_ : UIAlertAction!) -> Void in
                 })
 
                 alertController.addTextField { (textField: UITextField!) -> Void in
@@ -236,19 +252,20 @@ extension RequestViewController: UITableViewDelegate {
 
             case 1:
               //Media Id with ShortCode
+                //swiftlint:disable:next line_length
                 let alertController = UIAlertController.init(title: "MediaIdShortCode", message: "", preferredStyle: .alert)
 
                 let goAction = UIAlertAction.init(title: "Go", style: .default, handler: { _ -> Void in
                   let firstTextField = alertController.textFields?[0]
                   let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                  //swiftlint:disable:next force_cast line_length
                   let controller = storyboard.instantiateViewController(withIdentifier: "MediaViewController") as! MediaViewController
                   controller.mediaParameter = InstagramMediaRouter.MediaParameter.shortcode((firstTextField?.text)!)
                   controller.title = self.rowsDataSource[indexPath.section][indexPath.row]
                   self.navigationController?.pushViewController(controller, animated: true)
                 })
-
-                let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
-                  (_ : UIAlertAction!) -> Void in
+                //swiftlint:disable:next line_length
+                let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {(_ : UIAlertAction!) -> Void in
                 })
 
                 alertController.addTextField { (textField: UITextField!) -> Void in
@@ -262,6 +279,7 @@ extension RequestViewController: UITableViewDelegate {
 
             case 2:
               //Media Search
+                //swiftlint:disable:next line_length
                 let alertController = UIAlertController.init(title: "MediaSearchId", message: "", preferredStyle: .alert)
 
                 let goAction = UIAlertAction.init(title: "Go", style: .default, handler: { _ -> Void in
@@ -269,15 +287,16 @@ extension RequestViewController: UITableViewDelegate {
                   let latitudeTextField = alertController.textFields?[1]
                   let distanceTextField = alertController.textFields?[2]
                   let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                  //swiftlint:disable:next force_cast line_length
                   let controller = storyboard.instantiateViewController(withIdentifier: "MediaSearchViewController") as!  MediaSearchViewController
+                  //swiftlint:disable:next line_length
                   controller.parameter = InstagramMediaRouter.SearchMediaParameter(longitude: Double((longitudeTextField?.text)!)!, latitude: Double((latitudeTextField?.text)!)!, distance: Double((distanceTextField?.text)!))
 
                   controller.title = self.rowsDataSource[indexPath.section][indexPath.row]
                   self.navigationController?.pushViewController(controller, animated: true)
                 })
-
-                let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
-                  (_ : UIAlertAction!) -> Void in
+                //swiftlint:disable:next line_length
+                let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {(_ : UIAlertAction!) -> Void in
                 })
 
                 alertController.addTextField { (textField: UITextField!) -> Void in
@@ -307,14 +326,14 @@ extension RequestViewController: UITableViewDelegate {
               let goAction = UIAlertAction.init(title: "Go", style: .default, handler: { _ -> Void in
                 let firstTextField = alertController.textFields?[0]
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                //swiftlint:disable:next force_cast line_length
                 let controller = storyboard.instantiateViewController(withIdentifier: "CommentTableViewController") as! CommentTableViewController
                 controller.mediaId = firstTextField?.text
                 controller.title = self.rowsDataSource[indexPath.section][indexPath.row]
                 self.navigationController?.pushViewController(controller, animated: true)
               })
-
-              let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
-              (_ : UIAlertAction!) -> Void in
+              //swiftlint:disable:next line_length
+              let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {(_ : UIAlertAction!) -> Void in
               })
 
               alertController.addTextField { (textField: UITextField!) -> Void in
@@ -328,6 +347,7 @@ extension RequestViewController: UITableViewDelegate {
             case 1:
                 // CommentId
               let storyboard = UIStoryboard(name: "Main", bundle: nil)
+              //swiftlint:disable:next force_cast line_length
               let controller = storyboard.instantiateViewController(withIdentifier: "CommentIdViewController") as! CommentIdViewController
               self.navigationController?.pushViewController(controller, animated: true)
               controller.title = rowsDataSource[indexPath.section][indexPath.row]
@@ -345,14 +365,14 @@ extension RequestViewController: UITableViewDelegate {
               let goAction = UIAlertAction.init(title: "Go", style: .default, handler: { _ -> Void in
                 let firstTextField = alertController.textFields?[0]
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                //swiftlint:disable:next force_cast line_length
                 let controller = storyboard.instantiateViewController(withIdentifier: "LikeViewController") as! LikeViewController
                 controller.mediaId = firstTextField?.text
                 controller.title = self.rowsDataSource[indexPath.section][indexPath.row]
                 self.navigationController?.pushViewController(controller, animated: true)
               })
-
-              let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
-                (_ : UIAlertAction!) -> Void in
+              //swiftlint:disable:next line_length
+              let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {(_ : UIAlertAction!) -> Void in
               })
 
               alertController.addTextField { (textField: UITextField!) -> Void in
@@ -376,14 +396,14 @@ extension RequestViewController: UITableViewDelegate {
               let goAction = UIAlertAction.init(title: "Go", style: .default, handler: { _ -> Void in
                 let firstTextField = alertController.textFields?[0]
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                //swiftlint:disable:next force_cast line_length
                 let controller = storyboard.instantiateViewController(withIdentifier: "TagNameViewController") as! TagNameViewController
                 controller.tagName = firstTextField?.text
                 controller.title = self.rowsDataSource[indexPath.section][indexPath.row]
                 self.navigationController?.pushViewController(controller, animated: true)
               })
-
-              let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
-                (_ : UIAlertAction!) -> Void in
+              //swiftlint:disable:next line_length
+              let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {(_ : UIAlertAction!) -> Void in
               })
 
               alertController.addTextField { (textField: UITextField!) -> Void in
@@ -403,14 +423,15 @@ extension RequestViewController: UITableViewDelegate {
                 let minTagIdTextField = alertController.textFields?[2]
                 let mediaCountTextField = alertController.textFields?[3]
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                //swiftlint:disable:next force_cast line_length
                 let controller = storyboard.instantiateViewController(withIdentifier: "TagRecentViewController") as!  TagRecentViewController
+                //swiftlint:disable:next line_length
                 controller.parameter = InstagramTagRouter.RecentMediaParameter(tagName: (tagNameTextField?.text)!, minId:  minTagIdTextField?.text, maxId: maxTagIdTextField?.text, count: Int((mediaCountTextField?.text)!))
                 controller.title = self.rowsDataSource[indexPath.section][indexPath.row]
                 self.navigationController?.pushViewController(controller, animated: true)
               })
-
-              let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
-                (_ : UIAlertAction!) -> Void in
+              //swiftlint:disable:next line_length
+              let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {(_ : UIAlertAction!) -> Void in
               })
 
               alertController.addTextField { (textField: UITextField!) -> Void in
@@ -433,6 +454,7 @@ extension RequestViewController: UITableViewDelegate {
             case 2:
               //Search
               let storyboard = UIStoryboard(name: "Main", bundle: nil)
+              //swiftlint:disable:next force_cast line_length
               let controller = storyboard.instantiateViewController(withIdentifier: "UserSearchViewController") as! UserSearchViewController
               controller.title = rowsDataSource[indexPath.section][indexPath.row]
               self.navigationController?.pushViewController(controller, animated: true)
@@ -451,13 +473,13 @@ extension RequestViewController: UITableViewDelegate {
               let goAction = UIAlertAction.init(title: "Go", style: .default, handler: { _ -> Void in
                 let locationTextField = alertController.textFields?[0]
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                //swiftlint:disable:next force_cast line_length
                 let controller = storyboard.instantiateViewController(withIdentifier: "LocationViewController") as! LocationViewController
                 controller.locationId = locationTextField?.text
                 self.navigationController?.pushViewController(controller, animated: true)
               })
-
-              let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
-                (_ : UIAlertAction!) -> Void in
+              //swiftlint:disable:next line_length
+              let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {(_ : UIAlertAction!) -> Void in
               })
 
               alertController.addTextField { (textField: UITextField!) -> Void in
@@ -476,14 +498,15 @@ extension RequestViewController: UITableViewDelegate {
                 let minIdTextField = alertController.textFields?[1]
                 let maxIdTextField = alertController.textFields?[2]
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                //swiftlint:disable:next force_cast line_length
                 let controller = storyboard.instantiateViewController(withIdentifier: "LocationRecentViewController") as!  LocationRecentViewController
+                //swiftlint:disable:next line_length
                 controller.locationParameter = InstagramLocationRouter.RecentMediaParameter(locationId: (locationIdTextField?.text)!, minId: minIdTextField?.text, maxId: maxIdTextField?.text)
                 controller.title = self.rowsDataSource[indexPath.section][indexPath.row]
                 self.navigationController?.pushViewController(controller, animated: true)
               })
-
-              let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
-                (_ : UIAlertAction!) -> Void in
+              //swiftlint:disable:next line_length
+              let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {(_ : UIAlertAction!) -> Void in
               })
 
               alertController.addTextField { (textField: UITextField!) -> Void in
@@ -509,19 +532,19 @@ extension RequestViewController: UITableViewDelegate {
                 let distanceTextField = alertController.textFields?[2]
                 let facebookIdTextField = alertController.textFields?[3]
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                //swiftlint:disable:next force_cast line_length
                 let controller = storyboard.instantiateViewController(withIdentifier: "LocationSearchViewController") as!  LocationSearchViewController
 
                 let latitude = NumberFormatter().number(from: (latitudeTextField?.text)!)?.doubleValue
                 let longitude = NumberFormatter().number(from: (longitudeTextField?.text)!)?.doubleValue
                 let distance = NumberFormatter().number(from: (distanceTextField?.text)!)?.doubleValue
-
+                //swiftlint:disable:next line_length
                 controller.locationSearchParameter = InstagramLocationRouter.SearchMediaParameter(longitude: longitude, latitude: latitude, distance: distance, facebookPlacesId: facebookIdTextField?.text)
                 controller.title = self.rowsDataSource[indexPath.section][indexPath.row]
                 self.navigationController?.pushViewController(controller, animated: true)
               })
-
-              let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
-                (_ : UIAlertAction!) -> Void in
+              //swiftlint:disable:next line_length
+              let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {(_ : UIAlertAction!) -> Void in
               })
 
               alertController.addTextField { (textField: UITextField!) -> Void in
@@ -552,3 +575,4 @@ extension RequestViewController: UITableViewDelegate {
         }
     }
 }
+//swiftlint:disable:previous file_length

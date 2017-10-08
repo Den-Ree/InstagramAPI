@@ -9,30 +9,9 @@
 import ObjectMapper
 import Alamofire
 
-enum InstagramNetworkError: Error {
-  case wrongUrlComponents
-  // MARK: - Protected
-  var localizedDescription: String {
-    switch self {
-    case .wrongUrlComponents:
-      return "Can't create request from url components"
-    }
-  }
-}
-
-protocol AnyNetworkRoutable {
-  var path: String { get }
-  var parameters: InstagramRequestParameters { get }
-  var method: HTTPMethod { get }
-}
-
-protocol AnyInstagramNetworkRouter: AnyNetworkRoutable {
-  func asURLRequest(withAccessToken: String) throws -> URLRequest
-}
-
-extension AnyInstagramNetworkRouter {
+public extension AnyInstagramNetworkRouter {
   // MARK: - AnyInstagramNetworkRouter
-  func asURLRequest(withAccessToken accessToken: String) throws -> URLRequest {
+  public func asURLRequest(withAccessToken accessToken: String) throws -> URLRequest {
     /// Setup path
     var urlComponents = Instagram.Constants.baseUrlComponents
     urlComponents.path = "/v1" + path
@@ -68,7 +47,7 @@ extension AnyInstagramNetworkRouter {
 
 extension AnyInstagramNetworkRouter {
 
-  func describe() {
+  public func describe() {
     print("\n")
     print("Instagram Network Router Description...")
     print("Path: \(self.path)")

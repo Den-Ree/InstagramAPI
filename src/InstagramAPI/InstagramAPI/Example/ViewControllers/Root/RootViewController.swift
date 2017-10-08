@@ -15,16 +15,15 @@ class RootViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
     self.title = "Welcome!"
-
+    let client = InstagramClient.init(clientId: "", clientSecret: "", clientRedirectUri: "")
     sendLogInRequest()
   }
 }
 
 // MARK: // UIWebViewDelegate
 extension RootViewController: UIWebViewDelegate {
-
+  //swiftlint:disable:next line_length
   func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
     if isLogged == false {
       tryLogInAccount(forURL: request.url!)
@@ -51,6 +50,7 @@ extension RootViewController {
       if loggedUserId != nil {
         self.isLogged = true
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        //swiftlint:disable:next force_cast
         let controller = storyboard.instantiateViewController(withIdentifier: "RequestViewController") as! RequestViewController
         self.navigationController?.pushViewController(controller, animated: true)
         completion(nil)
@@ -74,7 +74,8 @@ extension RootViewController {
 private extension RootViewController {
 
   func sendLogInRequest() {
-      let request = URLRequest(url: InstagramClient.InstagramAuthorisationUrl().serverSideFlowUrl!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60)
+      //swiftlint:disable:next line_length
+      let request = URLRequest(url: InstagramClient.InstagramAuthorisationUrl().serverSideFlow!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60)
       print(request.url!)
       webView.loadRequest(request)
   }

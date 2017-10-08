@@ -10,11 +10,12 @@ import UIKit
 import ObjectMapper
 
 // MARK: - Instagram Object
-protocol AnyInstagramModel: Mappable, Equatable {
+public protocol AnyInstagramModel: Mappable, Equatable {
+  //swiftlint:disable:next identifier_name
   var id: String { get }
 }
 
-extension AnyInstagramModel {
+public extension AnyInstagramModel {
   // MARK: - Equatable
   public static func == (lhs: Self, rhs: Self) -> Bool {
     return lhs.id == rhs.id

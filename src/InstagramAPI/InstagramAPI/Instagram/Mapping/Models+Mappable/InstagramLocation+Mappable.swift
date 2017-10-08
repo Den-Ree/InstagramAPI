@@ -8,7 +8,7 @@
 
 import ObjectMapper
 
-extension InstagramLocation {
+public extension InstagramLocation {
   // MARK: - Mappable
   init?(map: Map) {}
   mutating func mapping(map: Map) {

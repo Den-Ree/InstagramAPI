@@ -8,10 +8,11 @@
 
 import Foundation
 
-struct InstagramRelationship: AnyInstagramModel {
+public struct InstagramRelationship: AnyInstagramModel {
   // MARK: - Properties
-  var id: String = ""
-  var outgoingStatus: String = ""
-  var incomingStatus: String = ""
+  //swiftlint:disable:next identifier_name
+  public var id: String = ""
+  public var outgoingStatus: String = ""
+  public var incomingStatus: String = ""
 
 }
